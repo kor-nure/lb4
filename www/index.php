@@ -1,16 +1,35 @@
 <?php
-$user = $_ENV["MYSQL_USER"];
-$password = $_ENV["MYSQL_PASSWORD"];
-$host = $_ENV["MYSQL_HOST"];
-$port = $_ENV["MYSQL_PORT"];
-$dbname = $_ENV["MYSQL_NAME"];
-$options = [
-  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-  PDO::ATTR_EMULATE_PREPARES => false,
-];
-$dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8";
+$file = "views.txt";
 
-$dbh = new PDO($dsn, $user, $password, $options);
+if (!file_exists($file)) {
+  $handle = fopen($file, "w");
+  fwrite($handle, "0");
+  fclose($handle);
+}
 
-echo "Connected to db!";
+$handle = fopen($file, "r");
+$views = (int)fread($handle, filesize($file) + 1);
+fclose($handle);
+
+$views++;
+
+$handle = fopen($file, "w");
+fwrite($handle, (string)$views);
+fclose($handle);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лабораторна робота 4</title>
+</head>
+
+<body>
+  <h1>Index Page</h1>
+  <p>Views: <strong><?= $views ?></strong></p>
+</body>
+
+</html>
