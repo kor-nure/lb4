@@ -30,6 +30,13 @@ fclose($handle);
 <body>
   <h1>Index Page</h1>
   <p>Views: <strong><?= $views ?></strong></p>
+
+  <form action="auth.php" method="post">
+    <label>
+      <span>Name</span>
+      <input type="text" name="name">
+    </label>
+  </form>
 </body>
 
 </html>
